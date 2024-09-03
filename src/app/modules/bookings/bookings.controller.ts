@@ -19,15 +19,6 @@ const createBooking: RequestHandler = catchAsync(async (req, res) => {
 // get all bookings
 const getAllBookings: RequestHandler = catchAsync(async (req, res) => {
   const result = await BookingService.getAllBookingsFromDB()
-  if (Object.keys(result).length === 0) {
-    return sendResponse(res, {
-      statusCodeNumber: httpStatus.NOT_FOUND,
-      success: false,
-      statusCode: 404,
-      message: 'No Data Found',
-      data: result,
-    })
-  }
   sendResponse(res, {
     statusCodeNumber: httpStatus.OK,
     success: true,
@@ -39,26 +30,16 @@ const getAllBookings: RequestHandler = catchAsync(async (req, res) => {
 
 // get all bookings
 const getAllUserBookings: RequestHandler = catchAsync(async (req, res) => {
-const email = req.user?.email
-    const result = await BookingService.getAllUserBookingsFromDB(email)
-    if (Object.keys(result).length === 0) {
-      return sendResponse(res, {
-        statusCodeNumber: httpStatus.NOT_FOUND,
-        success: false,
-        statusCode: 404,
-        message: 'No Data Found',
-        data: result,
-      })
-    }
-    sendResponse(res, {
-      statusCodeNumber: httpStatus.OK,
-      success: true,
-      statusCode: 200,
-      message: 'User bookings retrieved successfully',
-      data: result,
-    })
+  const email = req.user?.email
+  const result = await BookingService.getAllUserBookingsFromDB(email)
+  sendResponse(res, {
+    statusCodeNumber: httpStatus.OK,
+    success: true,
+    statusCode: 200,
+    message: 'User bookings retrieved successfully',
+    data: result,
   })
-
+})
 
 // update booking
 const updateBooking: RequestHandler = catchAsync(async (req, res) => {
@@ -91,5 +72,5 @@ export const BookingController = {
   getAllBookings,
   updateBooking,
   deleteBooking,
-  getAllUserBookings
+  getAllUserBookings,
 }

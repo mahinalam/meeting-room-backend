@@ -33,9 +33,18 @@ const slotSchema = new Schema<ISlot>(
       type: Boolean,
       trim: true,
       default: false,
-    }
+    },
   },
   { timestamps: true },
 )
+
+slotSchema.pre('find', function (next) {
+  this.where({ isDeleted: false })
+  next()
+})
+slotSchema.pre('find', function (next) {
+  this.where({ isBooked: false })
+  next()
+})
 
 export const Slot = model<ISlot>('Slot', slotSchema)

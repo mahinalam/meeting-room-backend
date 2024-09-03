@@ -1,5 +1,8 @@
+/* eslint-disable no-extra-semi */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
+import httpStatus from 'http-status'
+import AppError from '../../errors/appError'
 import { ISlot } from './slot.interface'
 import { Slot } from './slot.model'
 
@@ -35,22 +38,37 @@ const createSlotIntoDB = async (payload: ISlot) => {
 
 // get available slots
 const getAvailableSlotsFromDB = async (query: Record<string, unknown>) => {
- 
-  const {date, roomId} = query
+  // if (Object.keys(query).length > 0) {
+  const { date, roomId } = query
+  // }
   let filter = {}
-  if(date){
-    (filter as any).date = date
+  if (date) {
+    ;(filter as any).date = date
   }
-  if(roomId){
-    (filter as any).date = date
+  if (roomId) {
+    ;(filter as any).room = roomId
   }
 
   const slots = await Slot.find(filter).populate('room')
-  const availableSlots = slots.filter((slot) => !slot.isBooked)
+  if (slots.length === 0) {
+    throw new AppError(httpStatus.NOT_FOUND, 'No time slots found')
+  }
+  const availableSlots = slots.filter((slot) => slot.isBooked === false)
   return availableSlots
+}
+
+// get single slot
+
+const updateSlotsIntoDB = async (slotIds: string[]) => {
+  const result = await Slot.updateMany(
+    { _id: { $in: slotIds } },
+    { $set: { isBooked: true } },
+  )
+  return result
 }
 
 export const SlotService = {
   createSlotIntoDB,
   getAvailableSlotsFromDB,
+  updateSlotsIntoDB,
 }

@@ -16,11 +16,12 @@ router.post(
 router.get('/:id', RoomController.getSingleRoom)
 router.get('/', RoomController.getAllRooms)
 router.put(
-  '/:id',Auth(USER_ROLE.admin),
+  '/:id',
+  Auth(USER_ROLE.admin),
   validateRequest(RoomValidationSchema.updateRoomValidationSchema),
 
   RoomController.updateRoom,
 )
-router.delete('/:id',Auth(USER_ROLE.admin), RoomController.deleteRoom)
+router.delete('/:id', Auth(USER_ROLE.admin), RoomController.deleteRoom)
 
 export const RoomRoutes = router

@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status'
+import AppError from '../../errors/appError'
 import { Room } from '../room/room.model'
 import { IBookings } from './bookings.interface'
 import { Booking } from './bookings.model'
+import { User } from '../user/user.model'
 
 const createBookingIntoDB = async (payload: IBookings) => {
   const room = await Room.findById(payload.room)
@@ -21,15 +24,18 @@ const getAllBookingsFromDB = async () => {
     .populate('room')
     .populate('user')
     .populate('slots')
+  if (result.length === 0) {
+    throw new AppError(httpStatus.NOT_FOUND, 'No booking exists.')
+  }
   return result
 }
 const getAllUserBookingsFromDB = async (email: string) => {
-  const result = await Booking.find()
+  const user = await User.findOne({ email })
+  const result = await Booking.find({ user: user!._id })
     .populate('room')
     .populate('user', 'email')
     .populate('slots')
-  const userBookings = result.filter((booking) => (booking as any).user.email === email)
-  return userBookings
+  return result
 }
 
 const updateBookingIntoDB = async (id: string, payload: Partial<IBookings>) => {

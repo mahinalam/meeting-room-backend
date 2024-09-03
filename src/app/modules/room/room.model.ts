@@ -6,7 +6,7 @@ const roomSchema = new Schema<IRoom>(
       type: String,
       required: true,
       trim: true,
-      unique: true
+      unique: true,
     },
     roomNo: {
       type: Number,
@@ -26,6 +26,11 @@ const roomSchema = new Schema<IRoom>(
     },
     pricePerSlot: {
       type: Number,
+      required: true,
+      trim: true,
+    },
+    image: {
+      type: String,
       required: true,
       trim: true,
     },
@@ -50,5 +55,9 @@ roomSchema.statics.isRoomExists = async function (
   return isRoomExists
 }
 
+roomSchema.pre('find', function (next) {
+  this.where({ isDeleted: false })
+  next()
+})
 
 export const Room = model<IRoom, RoomModel>('Room', roomSchema)

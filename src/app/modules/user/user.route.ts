@@ -2,6 +2,8 @@ import express from 'express'
 import validateRequest from '../../middlewares/validateRequest'
 import { UserController } from './user.controller'
 import { UserValidationSchema } from './user.validation'
+import { USER_ROLE } from './user.constant'
+import Auth from '../../middlewares/auth'
 
 const router = express.Router()
 
@@ -15,5 +17,7 @@ router.post(
   validateRequest(UserValidationSchema.loginValidationSchema),
   UserController.loginUser,
 )
+
+router.get('/me', Auth(USER_ROLE.admin, USER_ROLE.user), UserController.getMe)
 
 export const userRoutes = router

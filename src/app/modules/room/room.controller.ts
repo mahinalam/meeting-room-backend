@@ -22,15 +22,6 @@ const getSingleRoom: RequestHandler = catchAsync(async (req, res) => {
   const { id } = req.params
 
   const result = await RoomServices.getSingleRoomFromDB(id)
-  if (!result) {
-    return sendResponse(res, {
-      statusCodeNumber: httpStatus.NOT_FOUND,
-      success: false,
-      statusCode: 404,
-      message: 'No Data Found',
-      data: [],
-    })
-  }
   sendResponse(res, {
     statusCodeNumber: httpStatus.OK,
     success: true,
@@ -42,15 +33,6 @@ const getSingleRoom: RequestHandler = catchAsync(async (req, res) => {
 // get all rooms
 const getAllRooms: RequestHandler = catchAsync(async (req, res) => {
   const result = await RoomServices.getAllRoomsFromDB()
-  if (result.length === 0) {
-    return sendResponse(res, {
-      statusCodeNumber: httpStatus.NOT_FOUND,
-      success: false,
-      statusCode: 404,
-      message: 'No Data Found',
-      data: [],
-    })
-  }
   sendResponse(res, {
     statusCodeNumber: httpStatus.OK,
     success: true,
@@ -62,37 +44,37 @@ const getAllRooms: RequestHandler = catchAsync(async (req, res) => {
 
 // update room
 const updateRoom: RequestHandler = catchAsync(async (req, res) => {
-    const {id} = req.params;
-    const payload = req.body;
-   
-     const result = await RoomServices.updateRoomIntoDB(id, payload)
-    sendResponse(res, {
-      statusCodeNumber: httpStatus.OK,
-      success: true,
-      statusCode: 200,
-      message: 'Room updated successfully',
-      data: result,
-    })
-  })
+  const { id } = req.params
+  const payload = req.body
 
-  // delete room
-  const deleteRoom: RequestHandler = catchAsync(async (req, res) => {
-    const {id} = req.params;
-   
-     const result = await RoomServices.deleteRoomFromDB(id)
-    sendResponse(res, {
-      statusCodeNumber: httpStatus.OK,
-      success: true,
-      statusCode: 200,
-      message: 'Room deleted successfully',
-      data: result,
-    })
+  const result = await RoomServices.updateRoomIntoDB(id, payload)
+  sendResponse(res, {
+    statusCodeNumber: httpStatus.OK,
+    success: true,
+    statusCode: 200,
+    message: 'Room updated successfully',
+    data: result,
   })
+})
+
+// delete room
+const deleteRoom: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params
+
+  const result = await RoomServices.deleteRoomFromDB(id)
+  sendResponse(res, {
+    statusCodeNumber: httpStatus.OK,
+    success: true,
+    statusCode: 200,
+    message: 'Room deleted successfully',
+    data: result,
+  })
+})
 
 export const RoomController = {
   createRoom,
   getSingleRoom,
   getAllRooms,
   updateRoom,
-  deleteRoom
+  deleteRoom,
 }

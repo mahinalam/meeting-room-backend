@@ -56,7 +56,13 @@ const loginUserIntoDB = async (payload: ILoginUser) => {
   return { result, accessToken }
 }
 
+const getMe = async (email: string) => {
+  const result = await User.findOne({ email })
+  return result
+}
+
 export const UserServices = {
   createUserIntoDB,
   loginUserIntoDB,
+  getMe,
 }

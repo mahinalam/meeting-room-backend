@@ -8,16 +8,18 @@ import { USER_ROLE } from '../user/user.constant'
 const router = express.Router()
 
 router.post(
-  '/', Auth(USER_ROLE.user),
+  '/',
+  Auth(USER_ROLE.user),
   validateRequest(BookingsValidationSchema.createBookingsValidationSchema),
   BookingController.createBooking,
 )
-router.get('/',Auth(USER_ROLE.admin), BookingController.getAllBookings)
+router.get('/', Auth(USER_ROLE.admin), BookingController.getAllBookings)
 router.put(
-  '/:id', Auth(USER_ROLE.admin),
+  '/:id',
+  Auth(USER_ROLE.admin),
   validateRequest(BookingsValidationSchema.updateBookingsValidationSchema),
   BookingController.updateBooking,
 )
-router.delete('/:id',Auth(USER_ROLE.admin), BookingController.deleteBooking)
+router.delete('/:id', Auth(USER_ROLE.admin), BookingController.deleteBooking)
 
 export const BookingsRoutes = router

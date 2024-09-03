@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ErrorRequestHandler } from 'express';
-import { ZodError } from 'zod';
-import { TErrorMessages } from '../interface/error';
-import config from '../config';
-import handleMongooseValidationError from '../errors/handleMongooseValidationError';
-import handleCastError from '../errors/handleCastError';
-import hanldeDuplicateError from '../errors/hanldeDuplicateError';
-import AppError from '../errors/appError';
-import handleZodError from '../errors/hanldeZodError';
+import { ErrorRequestHandler } from 'express'
+import { ZodError } from 'zod'
+import { TErrorMessages } from '../interface/error'
+import config from '../config'
+import handleMongooseValidationError from '../errors/handleMongooseValidationError'
+import handleCastError from '../errors/handleCastError'
+import hanldeDuplicateError from '../errors/hanldeDuplicateError'
+import AppError from '../errors/appError'
+import handleZodError from '../errors/hanldeZodError'
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
   req,
@@ -17,50 +17,53 @@ export const globalErrorHandler: ErrorRequestHandler = (
   next,
 ) => {
   // setting default values
-  let statusCode = 500;
-  let message = 'something went wrong!';
+  let statusCode = 500
+  let message = 'something went wrong!'
 
   let errorMessages: TErrorMessages = [
     {
       path: '',
       message: 'something went wrong',
     },
-  ];
+  ]
 
   if (err instanceof ZodError) {
-    const simplifiedError = handleZodError(err);
-    statusCode = simplifiedError.statusCode;
-    message = simplifiedError.message;
-    errorMessages = simplifiedError.errorMessages;
+    const simplifiedError = handleZodError(err)
+    statusCode = simplifiedError.statusCode
+    message = simplifiedError.message
+    errorMessages = simplifiedError.errorMessages
   } else if (err?.name === 'ValidationError') {
-    const simplifiedError = handleMongooseValidationError(err);
-    statusCode = simplifiedError?.statusCode;
-    message = simplifiedError?.message;
-    errorMessages = simplifiedError.errorMessages;
+    const simplifiedError = handleMongooseValidationError(err)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorMessages = simplifiedError.errorMessages
   } else if (err?.name === 'CastError') {
-    const simplifiedError = handleCastError(err);
-    statusCode = simplifiedError?.statusCode;
-    message = simplifiedError?.message;
-    errorMessages = simplifiedError.errorMessages;
+    const simplifiedError = handleCastError(err)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorMessages = simplifiedError.errorMessages
   } else if (err?.code === 11000) {
-    const simplifiedError = hanldeDuplicateError(err);
-    statusCode = simplifiedError?.statusCode;
-    message = simplifiedError?.message;
-    errorMessages = simplifiedError.errorMessages;
-  }else if(err instanceof AppError){
-     statusCode = err.statusCode;
-     message = err?.message;
-     errorMessages = [{
-      path: '',
-      message: err?.message
-     }]
-  
-  }else if(err instanceof Error){
-    message = err?.message;
-    errorMessages = [{
-     path: '',
-     message: err?.message
-    }]
+    const simplifiedError = hanldeDuplicateError(err)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorMessages = simplifiedError.errorMessages
+  } else if (err instanceof AppError) {
+    statusCode = err.statusCode
+    message = err?.message
+    errorMessages = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ]
+  } else if (err instanceof Error) {
+    message = err?.message
+    errorMessages = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ]
   }
 
   return res.status(statusCode).json({
@@ -68,7 +71,5 @@ export const globalErrorHandler: ErrorRequestHandler = (
     message,
     errorMessages,
     stack: config.NODE_ENV === 'development' ? err.stack : null,
-  });
-};
-
-
+  })
+}

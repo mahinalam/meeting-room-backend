@@ -7,11 +7,11 @@ const Auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) {
-        res.status(401).json({
-            success: false,
-            statusCode: 401,
-            message: 'You have no access to this route',
-          })
+      res.status(401).json({
+        success: false,
+        statusCode: 401,
+        message: 'You have no access to this route',
+      })
     }
     // check if the token is valid
     jwt.verify(
@@ -27,11 +27,11 @@ const Auth = (...requiredRoles: TUserRole[]) => {
         }
         const role = (decoded as JwtPayload).role
         if (requiredRoles && !requiredRoles.includes(role)) {
-            res.status(401).json({
-                success: false,
-                statusCode: 401,
-                message: 'You have no access to this route',
-              })
+          res.status(401).json({
+            success: false,
+            statusCode: 401,
+            message: 'You have no access to this route',
+          })
         }
         req.user = decoded as JwtPayload
         next()

@@ -59,9 +59,12 @@ userSchema.statics.isUserDeleted = async function (email: string) {
 }
 
 // matched password
-userSchema.statics.isPasswordMatched = async function(plainTextPassword: string, hashPassword: string): Promise<boolean>{
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword: string,
+  hashPassword: string,
+): Promise<boolean> {
   const passwordMatched = await bcrypt.compare(plainTextPassword, hashPassword)
-    return passwordMatched
+  return passwordMatched
 }
 
 // // set hash before save password to db

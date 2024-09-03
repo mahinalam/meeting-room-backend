@@ -43,5 +43,5 @@ const loginValidationSchema = z.object({
 
 export const UserValidationSchema = {
   createUserValidationSchema,
-  loginValidationSchema
+  loginValidationSchema,
 }

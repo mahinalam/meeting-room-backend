@@ -18,13 +18,13 @@ const bookingsSchema = new Schema<IBookings>(
       type: [String],
       required: true,
       trim: true,
-      ref: 'Slot'
+      ref: 'Slot',
     },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
       trim: true,
-      ref: 'User'
+      ref: 'User',
     },
     totalAmount: {
       type: Number,
@@ -32,22 +32,23 @@ const bookingsSchema = new Schema<IBookings>(
       trim: true,
     },
     isConfirmed: {
-        type: String,
-        enum: ['confirmed', 'unconfirmed', 'canceled'],
+      type: String,
+      enum: ['confirmed', 'unconfirmed', 'canceled'],
       trim: true,
-      default: 'unconfirmed'
+      default: 'unconfirmed',
     },
     isDeleted: {
       type: Boolean,
       trim: true,
       default: false,
-    }
+    },
   },
   { timestamps: true },
 )
 
-// bookingsSchema.pre('save', async function(){
-
-// })
+bookingsSchema.pre('find', function (next) {
+  this.where({ isDeleted: false })
+  next()
+})
 
 export const Booking = model<IBookings>('Booking', bookingsSchema)
