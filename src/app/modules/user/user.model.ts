@@ -11,11 +11,6 @@ const userSchema = new Schema<IUser>(
       required: true,
       trim: true,
     },
-    address: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     email: {
       type: String,
       required: true,
@@ -28,16 +23,11 @@ const userSchema = new Schema<IUser>(
       trim: true,
       select: false,
     },
-    phone: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     role: {
       type: String,
-      required: true,
       trim: true,
       enum: userRole,
+      default: 'guest',
     },
     isDeleted: {
       type: Boolean,

@@ -8,7 +8,8 @@ const app: Application = express()
 //parsers
 app.use(express.json())
 app.use(
-  cors({ origin: 'https://meeting-room-mu.vercel.app', credentials: true }),
+  // cors({ origin: 'https://meeting-room-mu.vercel.app', credentials: true }),
+  cors({ origin: 'http://localhost:5173', credentials: true }),
 )
 app.use('/api', router)
 app.use(notFound)
