@@ -4,12 +4,26 @@ import { userRole } from './user.constant'
 import config from '../../config'
 import bcrypt from 'bcrypt'
 
+const userNameSchema = new Schema({
+  firstName: {
+    type: String,
+    required: [true, 'First Name is required'],
+    trim: true,
+    maxlength: [20, 'Name can not be more than 20 characters'],
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    required: [true, 'Last Name is required'],
+    maxlength: [20, 'Name can not be more than 20 characters'],
+  },
+})
+
 const userSchema = new Schema<IUser>(
   {
     name: {
-      type: String,
+      type: userNameSchema,
       required: true,
-      trim: true,
     },
     email: {
       type: String,
@@ -28,6 +42,18 @@ const userSchema = new Schema<IUser>(
       trim: true,
       enum: userRole,
       default: 'guest',
+    },
+    city: {
+      type: String,
+      trim: true,
+    },
+    address: {
+      type: String,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      trim: true,
     },
     isDeleted: {
       type: Boolean,

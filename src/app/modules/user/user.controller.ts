@@ -8,9 +8,9 @@ import AppError from '../../errors/appError'
 
 const createUser: RequestHandler = catchAsync(async (req, res) => {
   const user = req.body
+  console.log('user', user)
   const result = await UserServices.createUserIntoDB(user)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'User registered successfully',
@@ -29,7 +29,6 @@ const loginUser: RequestHandler = catchAsync(async (req, res) => {
 
   const result = await UserServices.loginUserIntoDB(loggedUser)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     token: result.accessToken,
@@ -43,7 +42,6 @@ const getMe = catchAsync(async (req, res) => {
   const result = await UserServices.getMe(email)
 
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'User retrieved successfully',

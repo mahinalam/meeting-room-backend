@@ -1,5 +1,4 @@
-export const userRole = ['user', 'admin']
-export const userStatus = ['active', 'blocked']
+export const userRole = ['guest', 'host', 'admin']
 
 export const USER_ROLE = {
   guest: 'guest',

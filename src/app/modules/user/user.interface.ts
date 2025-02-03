@@ -3,10 +3,16 @@ import { Model } from 'mongoose'
 import { USER_ROLE } from './user.constant'
 
 export interface IUser {
-  name: string
+  name: {
+    firstName: string
+    lastName: string
+  }
   email: string
   password: string
   role: TUserRole
+  city: string
+  address: string
+  phone: string
   isDeleted: boolean
   createdAt: Date
   updatedAt: Date

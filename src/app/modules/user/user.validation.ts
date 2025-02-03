@@ -1,12 +1,18 @@
 import z from 'zod'
 import { userRole } from './user.constant'
+
+const nameSchema = z.object({
+  firstName: z.string({
+    required_error: 'First name is required',
+  }),
+  lastName: z.string({
+    required_error: 'Last name is required',
+  }),
+})
+
 const createUserValidationSchema = z.object({
   body: z.object({
-    name: z
-      .string({
-        required_error: 'Name is required',
-      })
-      .trim(),
+    name: nameSchema,
     email: z
       .string({
         required_error: 'Email is required',
@@ -23,13 +29,18 @@ const createUserValidationSchema = z.object({
       .string({
         required_error: 'Phone is required',
       })
-      .trim(),
-    role: z.enum(userRole as [string, ...string[]]),
+      .optional(),
+    city: z
+      .string({
+        required_error: 'City is required',
+      })
+      .optional(),
+    role: z.enum(userRole as [string, ...string[]]).optional(),
     address: z
       .string({
         required_error: 'Address is required',
       })
-      .trim(),
+      .optional(),
     isDeleted: z.boolean().optional(),
   }),
 })

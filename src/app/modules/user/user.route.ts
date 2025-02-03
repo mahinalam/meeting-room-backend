@@ -9,7 +9,7 @@ const router = express.Router()
 
 router.post(
   '/signup',
-  validateRequest(UserValidationSchema.createUserValidationSchema),
+  // validateRequest(UserValidationSchema.createUserValidationSchema),
   UserController.createUser,
 )
 router.post(
@@ -18,6 +18,10 @@ router.post(
   UserController.loginUser,
 )
 
-router.get('/me', Auth(USER_ROLE.admin, USER_ROLE.user), UserController.getMe)
+router.get(
+  '/me',
+  Auth(USER_ROLE.admin, USER_ROLE.guest, USER_ROLE.host),
+  UserController.getMe,
+)
 
 export const userRoutes = router
