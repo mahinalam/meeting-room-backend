@@ -12,19 +12,19 @@ const moduleRoutes = [
     element: userRoutes,
   },
   {
-    path: '/rooms',
+    path: '/room',
     element: RoomRoutes,
   },
   {
-    path: '/slots',
+    path: '/slot',
     element: SlotRoutes,
   },
   {
-    path: '/bookings',
+    path: '/booking',
     element: BookingsRoutes,
   },
   {
-    path: '/my-bookings',
+    path: '/my-booking',
     element: UsersBookingRoutes,
   },
 ]

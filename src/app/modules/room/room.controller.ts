@@ -9,7 +9,6 @@ const createRoom: RequestHandler = catchAsync(async (req, res) => {
 
   const result = await RoomServices.createRoomIntoDB(room)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Room added successfully',
@@ -23,7 +22,6 @@ const getSingleRoom: RequestHandler = catchAsync(async (req, res) => {
 
   const result = await RoomServices.getSingleRoomFromDB(id)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Room retrieved successfully',
@@ -34,7 +32,6 @@ const getSingleRoom: RequestHandler = catchAsync(async (req, res) => {
 const getAllRooms: RequestHandler = catchAsync(async (req, res) => {
   const result = await RoomServices.getAllRoomsFromDB()
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Rooms retrieved successfully',
@@ -49,7 +46,6 @@ const updateRoom: RequestHandler = catchAsync(async (req, res) => {
 
   const result = await RoomServices.updateRoomIntoDB(id, payload)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Room updated successfully',
@@ -63,7 +59,6 @@ const deleteRoom: RequestHandler = catchAsync(async (req, res) => {
 
   const result = await RoomServices.deleteRoomFromDB(id)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Room deleted successfully',

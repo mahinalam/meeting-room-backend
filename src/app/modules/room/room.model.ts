@@ -2,42 +2,44 @@ import { Schema, model } from 'mongoose'
 import { IRoom, RoomModel } from './room.interface'
 const roomSchema = new Schema<IRoom>(
   {
-    name: {
+    title: {
       type: String,
       required: true,
       trim: true,
       unique: true,
     },
-    roomNo: {
-      type: Number,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    floorNo: {
+    guestCapacity: {
       type: Number,
       required: true,
       trim: true,
     },
-    capacity: {
-      type: Number,
-      required: true,
-      trim: true,
-    },
-    pricePerSlot: {
-      type: Number,
-      required: true,
-      trim: true,
-    },
-    image: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    amenities: {
+    images: {
       type: [String],
       required: true,
       trim: true,
+    },
+    adult: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    bathRoom: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    bedRoom: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    child: {
+      type: Number,
+      default: 0,
+    },
+    location: {
+      type: String,
+      required: true,
     },
     isDeleted: {
       type: Boolean,

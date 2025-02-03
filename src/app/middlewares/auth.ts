@@ -5,7 +5,7 @@ import config from '../config'
 import { TUserRole } from '../modules/user/user.interface'
 const Auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(' ')[1]
+    const token = req.headers.authorization
     if (!token) {
       res.status(401).json({
         success: false,

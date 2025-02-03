@@ -2,13 +2,15 @@
 import { Model } from 'mongoose'
 
 export interface IRoom {
-  name: string
-  roomNo: number
-  floorNo: number
-  capacity: number
-  pricePerSlot: number
-  image: string
-  amenities: string[]
+  _id: string
+  title: string
+  location: string
+  bedRoom: number
+  bathRoom: number
+  adult: number
+  child: number
+  guestCapacity: number
+  images: string[]
   isDeleted: boolean
 }
 

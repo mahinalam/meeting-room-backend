@@ -7,7 +7,7 @@ import { Room } from './room.model'
 
 const createRoomIntoDB = async (payload: IRoom) => {
   // check if the room exists
-  const room = await Room.findOne({ roomNo: payload?.roomNo })
+  const room = await Room.findOne({ title: payload?.title })
   // const room = await Room.isRoomExists(payload.name)
   if (room) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Room already exists')
