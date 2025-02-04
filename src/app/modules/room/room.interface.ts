@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Model } from 'mongoose'
+import { TGuest } from '../bookings/bookings.interface'
 
 export interface IRoom {
   _id: string
@@ -7,10 +8,11 @@ export interface IRoom {
   location: string
   bedRoom: number
   bathRoom: number
-  adult: number
-  child: number
-  guestCapacity: number
   images: string[]
+  guests: TGuest
+  guestCapacity: number
+  from: Date
+  to: Date
   isDeleted: boolean
 }
 

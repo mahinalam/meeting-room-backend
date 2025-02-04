@@ -2,20 +2,24 @@
 import httpStatus from 'http-status'
 import AppError from '../../errors/appError'
 import { Room } from '../room/room.model'
-import { IBookings } from './bookings.interface'
+import { IBooking } from './bookings.interface'
 import { Booking } from './bookings.model'
 import { User } from '../user/user.model'
+import { ObjectId } from 'mongoose'
 
-const createBookingIntoDB = async (payload: IBookings) => {
+const createBookingIntoDB = async (userId: string, payload: IBooking) => {
+  // check if the room exists
   const room = await Room.findById(payload.room)
-  const pricePerSlot = room?.pricePerSlot
-  const totalAmount = Number(pricePerSlot) * Number(payload?.slots.length)
+
+  if (!room) {
+    throw new AppError(httpStatus.NOT_FOUND, 'No room exists.')
+  }
+  payload.user = userId
+  // TODO: fixed totalAmoount
+  const totalAmount = 100
   const updatedBookingData = { ...payload, totalAmount }
-  const result = (
-    await (
-      await (await Booking.create(updatedBookingData)).populate('room')
-    ).populate('user')
-  ).populate('slots')
+  const result = await Booking.create(updatedBookingData)
+
   return result
 }
 

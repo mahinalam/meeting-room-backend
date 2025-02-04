@@ -7,9 +7,9 @@ import httpStatus from 'http-status'
 // create booking
 const createBooking: RequestHandler = catchAsync(async (req, res) => {
   const booking = req.body
-  const result = await BookingService.createBookingIntoDB(booking)
+  const { userId } = req.user
+  const result = await BookingService.createBookingIntoDB(userId, booking)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Booking created successfully',
@@ -20,7 +20,6 @@ const createBooking: RequestHandler = catchAsync(async (req, res) => {
 const getAllBookings: RequestHandler = catchAsync(async (req, res) => {
   const result = await BookingService.getAllBookingsFromDB()
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'All bookings retrieved successfully',
@@ -33,7 +32,6 @@ const getAllUserBookings: RequestHandler = catchAsync(async (req, res) => {
   const email = req.user?.email
   const result = await BookingService.getAllUserBookingsFromDB(email)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'User bookings retrieved successfully',
@@ -47,7 +45,6 @@ const updateBooking: RequestHandler = catchAsync(async (req, res) => {
   const updatedBooking = req.body
   const result = await BookingService.updateBookingIntoDB(id, updatedBooking)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Booking updated successfully',
@@ -59,7 +56,6 @@ const deleteBooking: RequestHandler = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await BookingService.deleteBookingFromDB(id)
   sendResponse(res, {
-    statusCodeNumber: httpStatus.OK,
     success: true,
     statusCode: 200,
     message: 'Booking deleted successfully',

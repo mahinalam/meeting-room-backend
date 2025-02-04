@@ -1,54 +1,63 @@
 import { Schema, model } from 'mongoose'
-import { IBookings } from './bookings.interface'
+import { IBooking } from './bookings.interface'
 
-const bookingsSchema = new Schema<IBookings>(
+const bookingSchema = new Schema<IBooking>(
   {
-    room: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      trim: true,
-      ref: 'Room',
-    },
-    date: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    slots: {
-      type: [String],
-      required: true,
-      trim: true,
-      ref: 'Slot',
-    },
     user: {
       type: Schema.Types.ObjectId,
-      required: true,
-      trim: true,
       ref: 'User',
+      required: true,
+    },
+    room: {
+      type: Schema.Types.ObjectId,
+      ref: 'Room',
+      required: true,
+    },
+    checkInDate: {
+      type: Date,
+      required: true,
+    },
+    checkOutDate: {
+      type: Date,
+      required: true,
+    },
+    guests: {
+      adult: {
+        type: Number,
+        required: true,
+        min: 1,
+      },
+      child: {
+        type: Number,
+        default: 0,
+      },
     },
     totalAmount: {
       type: Number,
       required: true,
-      trim: true,
     },
-    isConfirmed: {
+    paymentMethod: {
       type: String,
-      enum: ['confirmed', 'unconfirmed', 'canceled'],
-      trim: true,
-      default: 'unconfirmed',
+      enum: ['cash', 'amarPay'],
+      required: true,
     },
-    isDeleted: {
-      type: Boolean,
-      trim: true,
-      default: false,
+    paymentStatus: {
+      type: String,
+      enum: ['pending', 'paid', 'failed'],
+      default: 'pending',
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'cancelled', 'completed'],
+      default: 'pending',
     },
   },
   { timestamps: true },
 )
 
-bookingsSchema.pre('find', function (next) {
+bookingSchema.pre('find', function (next) {
   this.where({ isDeleted: false })
   next()
 })
 
-export const Booking = model<IBookings>('Booking', bookingsSchema)
+export const Booking = model<IBooking>('Booking', bookingSchema)

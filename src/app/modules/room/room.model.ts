@@ -1,5 +1,23 @@
 import { Schema, model } from 'mongoose'
 import { IRoom, RoomModel } from './room.interface'
+import { number } from 'zod'
+import { TGuest } from '../bookings/bookings.interface'
+
+const guestSchema = new Schema<TGuest>({
+  adult: {
+    type: Number,
+    required: true,
+  },
+  child: {
+    type: Number,
+    required: true,
+  },
+  totalCapacity: {
+    type: Number,
+    required: true,
+  },
+})
+
 const roomSchema = new Schema<IRoom>(
   {
     title: {
@@ -18,11 +36,7 @@ const roomSchema = new Schema<IRoom>(
       required: true,
       trim: true,
     },
-    adult: {
-      type: Number,
-      required: true,
-      trim: true,
-    },
+    guests: guestSchema,
     bathRoom: {
       type: Number,
       required: true,
@@ -32,10 +46,6 @@ const roomSchema = new Schema<IRoom>(
       type: Number,
       required: true,
       trim: true,
-    },
-    child: {
-      type: Number,
-      default: 0,
     },
     location: {
       type: String,

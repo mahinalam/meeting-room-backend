@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import { userRoutes } from '../modules/user/user.route'
 import { RoomRoutes } from '../modules/room/room.route'
-import { SlotRoutes } from '../modules/slot/slot.route'
 import { BookingsRoutes } from '../modules/bookings/bookings.route'
 import { UsersBookingRoutes } from '../modules/bookings/users.bookings.route'
+import { AminityRoutes } from '../modules/aminity/aminity.route'
 const router = Router()
 
 const moduleRoutes = [
@@ -16,8 +16,8 @@ const moduleRoutes = [
     element: RoomRoutes,
   },
   {
-    path: '/slot',
-    element: SlotRoutes,
+    path: '/aminity',
+    element: AminityRoutes,
   },
   {
     path: '/booking',

@@ -9,7 +9,7 @@ const router = express.Router()
 
 router.post(
   '/',
-  Auth(USER_ROLE.user),
+  Auth(USER_ROLE.guest, USER_ROLE.host),
   validateRequest(BookingsValidationSchema.createBookingsValidationSchema),
   BookingController.createBooking,
 )

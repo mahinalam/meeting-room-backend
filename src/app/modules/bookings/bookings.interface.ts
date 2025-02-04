@@ -1,16 +1,28 @@
 import { Types } from 'mongoose'
+
 export type BookingStatus = {
   confirmed: 'confirmed'
   unconfirmed: 'unconfirmed'
   canceled: 'canceled'
 }
 
-export interface IBookings {
+export type TGuest = {
+  adult: number
+  child: number
+  totalCapacity?: number
+}
+
+export interface IBooking {
+  user: Types.ObjectId | string
   room: Types.ObjectId
-  slots: string[]
-  user: Types.ObjectId
-  date: string
+  checkInDate: string | Date
+  checkOutDate: string | Date
+  guests: TGuest
   totalAmount: number
-  isConfirmed: 'confirmed' | 'unconfirmed' | 'canceled'
+  paymentMethod: 'cash' | 'amarPay'
+  paymentStatus: 'pending' | 'paid' | 'failed'
+  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+  createdAt?: Date
+  updatedAt?: Date
   isDeleted: boolean
 }
