@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Mongoose, Schema, Types, model } from 'mongoose'
 import { IRoom, RoomModel } from './room.interface'
 import { number } from 'zod'
 import { TGuest } from '../bookings/bookings.interface'
@@ -20,16 +20,16 @@ const guestSchema = new Schema<TGuest>({
 
 const roomSchema = new Schema<IRoom>(
   {
+    host: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     title: {
       type: String,
       required: true,
       trim: true,
       unique: true,
-    },
-    guestCapacity: {
-      type: Number,
-      required: true,
-      trim: true,
     },
     images: {
       type: [String],

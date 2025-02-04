@@ -6,8 +6,8 @@ import catchAsync from '../../utils/catchAsync'
 // create room
 const createRoom: RequestHandler = catchAsync(async (req, res) => {
   const room = req.body
-
-  const result = await RoomServices.createRoomIntoDB(room)
+  const { userId } = req.user
+  const result = await RoomServices.createRoomIntoDB(userId, room)
   sendResponse(res, {
     success: true,
     statusCode: 200,

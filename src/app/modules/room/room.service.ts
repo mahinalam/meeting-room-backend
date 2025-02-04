@@ -5,13 +5,16 @@ import AppError from '../../errors/appError'
 import { IRoom } from './room.interface'
 import { Room } from './room.model'
 
-const createRoomIntoDB = async (payload: IRoom) => {
+const createRoomIntoDB = async (hostId: string, payload: IRoom) => {
   // check if the room exists
   const room = await Room.findOne({ title: payload?.title })
   // const room = await Room.isRoomExists(payload.name)
   if (room) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Room already exists')
   }
+
+  // set hostId into room
+  payload.host = hostId
   const result = await Room.create(payload)
   return result
 }

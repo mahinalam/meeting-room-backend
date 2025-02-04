@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { TGuest } from '../bookings/bookings.interface'
 
 export interface IRoom {
   _id: string
+  host: string | Types.ObjectId
   title: string
   location: string
   bedRoom: number
   bathRoom: number
   images: string[]
   guests: TGuest
-  guestCapacity: number
   from: Date
   to: Date
   isDeleted: boolean
